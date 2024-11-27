@@ -1,0 +1,108 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import '../../css/LoginHome.css';
+
+function LoginPage({ onLogin }) {
+  const [storeId, setStoreId] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
+  const navigate = useNavigate(); // 페이지 이동을 위한 navigate 함수
+
+  const handleLogin = async (e) => {
+    e.preventDefault(); // 폼 제출 시 새로고침 방지
+
+    if (!storeId || !password) {
+      setErrorMessage("아이디와 비밀번호를 모두 입력해주세요.");
+      return;
+    }
+
+    setIsLoading(true); // 로딩 시작
+
+    try {
+      const url = `/ROOT/api/seller/login.do`; // 로그인 API
+      const headers = { "Content-Type": "application/json" };
+      const body = { storeId, password };
+
+      const { data } = await axios.post(url, body, { headers });
+
+      if (data.status === 200) {
+        // 로그인 성공 시 로컬 스토리지에 토큰 저장
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("storeId", storeId);
+
+        // 로그인 상태 업데이트
+        onLogin(); 
+
+        // 로그인 데이터를 콘솔에 출력
+        console.log("로그인 성공! 로그인 데이터:", data);
+        console.log("아이디:", storeId);
+
+        // 로그인 후 SellerHome 페이지로 이동, 로그인 데이터 전달
+        navigate("/sellerhome", { state: { storeId, token: data.token } });
+      } else {
+        setErrorMessage("아이디 또는 비밀번호가 잘못되었습니다.");
+      }
+    } catch (error) {
+      console.error("로그인 중 오류:", error);
+      setErrorMessage("로그인 중 오류가 발생했습니다.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="login-home">
+      <div className="logo-container">
+        <h2 className="logo">ECOEATS</h2>
+      </div>
+
+      <div className="login-container">
+        <h3 className="login-title">SELLER LOGIN</h3>
+
+        <form onSubmit={handleLogin}>
+          <div className="login-input">
+            <input
+              type="text"
+              className="login-id"
+              placeholder="ID"
+              value={storeId}
+              onChange={(e) => setStoreId(e.target.value)}
+            />
+            <input
+              type="password"
+              className="login-pw"
+              placeholder="PASSWORD"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
+
+          <button
+            type="submit"
+            className="login-button"
+            disabled={isLoading || !storeId || !password} // 로딩 중이거나 입력 값이 없으면 비활성화
+          >
+            {isLoading ? "로그인 중..." : "LOGIN"}
+          </button>
+        </form>
+
+        <div className="sns-login">
+          <button className="sns-button naver">N</button>
+          <button className="sns-button kakao">K</button>
+        </div>
+
+        <div className="links">
+          <Link to="/signupPage" className="link">SIGN UP</Link>
+          <Link to="/ForgotPassword" className="link">FORGOT PASSWORD?</Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default LoginPage;

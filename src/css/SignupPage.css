@@ -1,0 +1,134 @@
+.signup-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    background-color: #FDF9ED;
+}
+
+.signup-logo-container {
+    text-align: center;
+    margin-bottom: -20px;
+    margin-top: 25px;
+}
+
+.signup-logo {
+    font-size: 50px;
+    color: #6BAF92;
+    font-weight: bold;
+}
+
+.signup-container {
+    width: 50%;
+    padding: 40px;
+    margin: 20px;
+    margin-bottom: 40px;
+    background-color: white;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.signup-title {
+    font-size: 33px;
+    color: #333;
+    margin-bottom: 20px;
+    margin-top: -10px;
+}
+
+.signup-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* 기본 스타일 */
+.storeId,
+.storeEmail,
+.password,
+.storeName,
+.Address,
+.phone,
+.startPickup,
+.endPickup,
+.select {
+    width: 100%;
+    max-width: 700px;
+    padding: 15px;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 18px;
+    box-sizing: border-box;
+}
+
+/* 가게 이미지 첨부 */
+.image-upload {
+    width: 100%;
+    max-width: 700px;
+    margin: 10px;
+    text-align: left;
+}
+
+.image-label {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.storeImage {
+    width: 100%;
+    padding: 15px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 18px;
+    box-sizing: border-box;
+}
+
+.signup-button {
+    width: 100%;
+    max-width: 700px;
+    padding: 15px;
+    margin: 20px 0;
+    background-color: #6BAF92;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    box-sizing: border-box;
+}
+
+.signup-button:hover {
+    background-color: #5e9c7f;
+}
+
+.sns-login {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.sns-button {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.sns-button.naver {
+    background-color: #03c75a;
+}
+
+.sns-button.kakao {
+    background-color: #fee500;
+    color: #3c1e1e;
+}
