@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import '../../css/Menu.css';
 
-function Menu() {
+function Menu({ setActivePage }) {
     const [storeInfo, setStoreInfo] = useState(null);
     const [menuItems, setMenuItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -20,7 +20,13 @@ function Menu() {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(5); // Display 5 items per page
     const location = useLocation();
-    const { storeId, token } = location.state || {};
+    console.log(location.state);
+    const storedStoreId = localStorage.getItem("storeId");
+    const storedToken = localStorage.getItem("token");
+    const { storeId, token } = location.state || {
+        storeId: storedStoreId,
+        token: storedToken,
+    };
 
     const navigate = useNavigate();
 
@@ -110,18 +116,22 @@ function Menu() {
                 alert("선택된 메뉴가 없습니다. 메뉴를 선택해 주세요.");
                 return;
             }
-            
+
             const response = await axios.post(
                 `/ROOT/api/menu/daily/add`,
                 { menuNos: selectedMenus }, // 선택된 메뉴 번호들을 전송
                 {
-                    headers: { 'Content-Type': 'application/json' }
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
                 }
             );
 
             if (response.data.status === 200) {
                 alert("데일리 메뉴가 추가되었습니다!");
-                navigate("/daily-menu"); // 데일리 메뉴 페이지로 이동
+                // 페이지 전환
+                setActivePage('DAILY_MENU');// 데일리 메뉴 페이지로 이동
             } else {
                 console.error('Error:', response.data.message);  // 오류 메시지 확인
                 alert("데일리 메뉴 추가 실패");

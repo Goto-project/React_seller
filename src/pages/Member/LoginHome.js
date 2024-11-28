@@ -37,7 +37,7 @@ function LoginPage({ onLogin }) {
         onLogin(); 
 
         // 로그인 데이터를 콘솔에 출력
-        console.log("로그인 성공! 로그인 데이터:", data);
+        console.log("로그인 성공! 로그인 데이터:", data.token);
         console.log("아이디:", storeId);
 
         // 로그인 후 SellerHome 페이지로 이동, 로그인 데이터 전달

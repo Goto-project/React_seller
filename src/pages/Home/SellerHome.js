@@ -82,7 +82,7 @@ const SellerHome = ({ onLogout }) => {
   const renderContent = () => {
     switch (activePage) {
       case 'MENU':
-        return <Menu />;
+        return <Menu setActivePage={setActivePage}/>;
       case 'DAILY_MENU':
         return <DailyMenu />;
       case 'ORDER_LIST':
