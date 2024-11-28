@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import '../../css/Menu.css';
 
@@ -12,6 +12,7 @@ function Menu() {
     const [newMenu, setNewMenu] = useState({ name: '', price: '', image: null });
     const [previewImage, setPreviewImage] = useState(null);
     const [isMenuFormVisible, setIsMenuFormVisible] = useState(false);
+    const [selectedMenus, setSelectedMenus] = useState([]); // 선택된 메뉴를 관리하는 상태
 
     const [editMenu, setEditMenu] = useState(null); // 수정할 메뉴 저장
     const [editPreviewImage, setEditPreviewImage] = useState(null); // 수정 이미지 미리보기
@@ -20,6 +21,8 @@ function Menu() {
     const [itemsPerPage] = useState(5); // Display 5 items per page
     const location = useLocation();
     const { storeId, token } = location.state || {};
+
+    const navigate = useNavigate();
 
     //가게 정보 불러오기
     useEffect(() => {
@@ -79,6 +82,56 @@ function Menu() {
 
         fetchMenuList();
     }, [token]);
+
+    const handleCheckboxChange = (menuNo) => {
+        setSelectedMenus((prevSelectedMenus) => {
+            if (prevSelectedMenus.includes(menuNo)) {
+                // 메뉴가 이미 선택되어 있으면 제거
+                return prevSelectedMenus.filter((id) => id !== menuNo);
+            } else {
+                // 메뉴가 선택되지 않았으면 추가
+                return [...prevSelectedMenus, menuNo];
+            }
+        });
+    };
+
+    const handleAddToDailyMenu = async () => {
+        if (selectedMenus.length === 0) {
+            alert("선택된 메뉴가 없습니다.");
+            return;
+        }
+
+        try {
+
+            // 선택된 메뉴가 비어있지 않은지 확인
+            console.log("선택된 메뉴 번호들:", selectedMenus);
+
+            if (!selectedMenus || selectedMenus.length === 0) {
+                alert("선택된 메뉴가 없습니다. 메뉴를 선택해 주세요.");
+                return;
+            }
+            
+            const response = await axios.post(
+                `/ROOT/api/menu/daily/add`,
+                { menuNos: selectedMenus }, // 선택된 메뉴 번호들을 전송
+                {
+                    headers: { 'Content-Type': 'application/json' }
+                }
+            );
+
+            if (response.data.status === 200) {
+                alert("데일리 메뉴가 추가되었습니다!");
+                navigate("/daily-menu"); // 데일리 메뉴 페이지로 이동
+            } else {
+                console.error('Error:', response.data.message);  // 오류 메시지 확인
+                alert("데일리 메뉴 추가 실패");
+            }
+        } catch (error) {
+            console.error("API 요청 중 오류 발생:", error);  // 오류 내용 출력
+            alert("데일리 메뉴 추가 중 오류 발생");
+        }
+    };
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -267,6 +320,11 @@ function Menu() {
                     <ul>
                         {currentMenuItems.map((menuItem) => (
                             <li className="menu-item" key={menuItem.menuNo}>
+                                <input
+                                    type="checkbox"
+                                    onChange={() => handleCheckboxChange(menuItem.menuNo)}
+                                    checked={selectedMenus.includes(menuItem.menuNo)}
+                                />
                                 <div className="menu-photo">
                                     {menuItem.imageurl && (
                                         <img
@@ -301,6 +359,9 @@ function Menu() {
                     </ul>
                 )}
             </div>
+            <button onClick={handleAddToDailyMenu} className="add-to-daily-btn">
+                데일리 메뉴로 추가
+            </button>
 
             {editMenu && (
                 <div className="edit-menu-modal">
