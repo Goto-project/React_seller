@@ -82,6 +82,10 @@ body {
     font-size: 20px;
 }
 
+.login-button:hover {
+    background-color: #519972;
+}
+
 .sns-login {
     display: flex;
     justify-content: center;

@@ -187,6 +187,7 @@
     border-radius: 8px;
     background-color: #f9f9f9;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    gap: 15px; /* 아이템 간격 추가 */
 }
 
 .menu-photo img {
@@ -202,6 +203,15 @@
     flex: 1;
     align-items: center;
     justify-content: space-between;
+}
+
+input[type="checkbox"] {
+    width: 24px; /* 체크박스 너비 */
+    height: 24px; /* 체크박스 높이 */
+    accent-color: #6baf92; /* 체크박스 색상 */
+    color: white;
+    margin-right: 15px; /* 체크박스와 이미지 간격 */
+    cursor: pointer; /* 클릭 시 커서 변경 */
 }
 
 .menu-name {
@@ -226,6 +236,25 @@
     gap: 10px;
     margin-left: 20px;
 }
+
+.add-to-daily-btn {
+    width: 100%;
+    padding: 10px 20px; 
+    margin-top: 15px;
+    background-color: #6BAF92;
+    color: #FDF9ED; 
+    border: none; 
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer; 
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-daily-btn:hover {
+    background-color: #519972; 
+}
+
 
 .edit-button,
 .delete-button {
