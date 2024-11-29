@@ -60,7 +60,7 @@ const SellerHome = ({ onLogout }) => {
         });
 
         if (response.data.status === 200) {
-          setStoreInfo(response.data.result);
+          setStoreInfo(response.data.result); // storeInfo 상태 업데이트
         } else {
           setErrorMessage("가게 정보를 불러오는 데 실패했습니다.");
         }
@@ -72,6 +72,15 @@ const SellerHome = ({ onLogout }) => {
     fetchStoreDetails();
   }, []);
 
+  //updatedInfo는 EditInformation 컴포넌트에서 수정된 새로운 가게 정보가 담긴 객체
+  //setStoreInfo는 useState 훅을 사용하여 설정한 상태 변경 함수
+  //setStoreInfo를 호출하면, storeInfo 상태를 새로운 값인 updatedInfo로 갱신
+  //setStoreInfo(updatedInfo)는 storeInfo 상태를 updatedInfo로 업데이트하여, 가게 정보가 최신 상태로 반영
+  
+  const updateStoreInfo = (updatedInfo) => { 
+    setStoreInfo(updatedInfo); // EditInformation에서 수정된 정보를 갱신
+  };
+
   const formatStoreId = (storeid) => {
     if (!storeid || storeid.length !== 10) {
       return storeid; // 10자리가 아니면 그대로 반환
@@ -82,13 +91,18 @@ const SellerHome = ({ onLogout }) => {
   const renderContent = () => {
     switch (activePage) {
       case 'MENU':
-        return <Menu setActivePage={setActivePage}/>;
+        return <Menu setActivePage={setActivePage} />;
       case 'DAILY_MENU':
         return <DailyMenu />;
       case 'ORDER_LIST':
         return <OrderList />;
       case 'EDIT_INFORMATION':
-        return <EditInformation />;
+        return (
+          <EditInformation
+            storeInfo={storeInfo}
+            setStoreInfo={updateStoreInfo}
+          />
+        );
       case 'CHANGE_PASSWORD':
         return <ChangePassword />;
       default:

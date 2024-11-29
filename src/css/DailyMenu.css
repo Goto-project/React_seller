@@ -1,0 +1,138 @@
+.daily-menu-container {
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.daily-menu-logo {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.daily-menu-p {
+    text-align: center;
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.menu-list {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.menu-item:hover {
+    transform: scale(1.02);
+}
+
+.menu-image {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.daily-menu-info {
+    display: flex;
+    flex: 1 1;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.daily-menu-name {
+    flex: 3 1;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    text-align: left;
+}
+
+.menu-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-btn, .delete-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.edit-btn {
+    background-color:#6baf92;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #bdbdbd;
+    color: white;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+    opacity: 0.8;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.modal-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.modal-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.modal-btn, .cancel-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 20px;
+}

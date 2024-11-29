@@ -28,6 +28,10 @@ function Menu({ setActivePage }) {
         token: storedToken,
     };
 
+    const [insertCheck, setinsertCheck] = useState(false);
+    const [deleteCheck, setdeleteCheck] = useState(false);
+    const [editCheck, seteditCheck] = useState(false);
+
     const navigate = useNavigate();
 
     //가게 정보 불러오기
@@ -77,7 +81,8 @@ function Menu({ setActivePage }) {
                 });
 
                 if (response.data.status === 200) {
-                    setMenuItems(response.data.menuList);
+                    const sortedMenuItems = response.data.menuList.sort((a, b) => b.menuNo - a.menuNo);
+                    setMenuItems(sortedMenuItems);
                 } else {
                     setMenuError("메뉴 조회에 실패했습니다.");
                 }
@@ -87,7 +92,7 @@ function Menu({ setActivePage }) {
         };
 
         fetchMenuList();
-    }, [token]);
+    }, [token, insertCheck, deleteCheck, editCheck]);
 
     const handleCheckboxChange = (menuNo) => {
         setSelectedMenus((prevSelectedMenus) => {
@@ -142,7 +147,6 @@ function Menu({ setActivePage }) {
         }
     };
 
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setNewMenu((prev) => ({ ...prev, [name]: value }));
@@ -164,6 +168,11 @@ function Menu({ setActivePage }) {
     //메뉴 추가하기
     const handleAddMenu = async (e) => {
         e.preventDefault();
+
+        if (!newMenu.name || !newMenu.price) {
+            alert('모든 필드를 입력해주세요!');
+            return;
+        }
 
         const formData = new FormData();
         formData.append(
@@ -187,7 +196,17 @@ function Menu({ setActivePage }) {
 
             if (response.data.status === 200) {
                 alert('메뉴가 추가되었습니다!');
-                window.location.reload();
+
+                setNewMenu({
+                    name: '',
+                    price: '',
+                    image: null,
+                });
+
+                setPreviewImage(null);
+                document.getElementById("imageInput").value = "";
+
+                setinsertCheck((prev) => (!prev));
             } else {
                 console.error('메뉴 추가 실패:', response.data.message);
             }
@@ -199,11 +218,9 @@ function Menu({ setActivePage }) {
     //메뉴 수정하기
     const handleEditMenuSubmit = async (e) => {
         e.preventDefault();
-
         if (!editMenu) return;
 
         try {
-            // FormData 생성 및 데이터 추가
             const formData = new FormData();
             formData.append(
                 'menu',
@@ -215,7 +232,6 @@ function Menu({ setActivePage }) {
                 formData.append('file', editMenu.image); // 이미지를 선택했을 경우 추가
             }
 
-            // PUT 요청
             const response = await axios.put(
                 `/ROOT/api/menu/update/${editMenu.menuNo}`,
                 formData,
@@ -228,7 +244,8 @@ function Menu({ setActivePage }) {
 
             if (response.status === 200) {
                 alert('메뉴가 수정되었습니다!');
-                window.location.reload();
+                seteditCheck((prev) => (!prev));
+                setEditMenu(null);
             } else {
                 console.error('메뉴 수정 실패:', response.data.message);
             }
@@ -250,7 +267,7 @@ function Menu({ setActivePage }) {
 
                 if (response.data.status === 200) {
                     alert('메뉴 삭제 성공');
-                    window.location.reload();
+                    setdeleteCheck((prev) => (!prev));
                 } else {
                     alert('메뉴 삭제 실패');
                 }
@@ -307,7 +324,7 @@ function Menu({ setActivePage }) {
                     </div>
                     <div className="form-row">
                         <label>이미지</label>
-                        <input type="file" onChange={handleImageChange} />
+                        <input type="file" onChange={handleImageChange} id="imageInput" />
                     </div>
                     {previewImage && (
                         <div className="image-preview">

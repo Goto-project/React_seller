@@ -3,8 +3,8 @@ import { useLocation } from "react-router-dom";
 import axios from 'axios';
 import '../../css/EditInfo.css';
 
-const EditInformation = () => {
-    const [storeInfo, setStoreInfo] = useState({
+const EditInformation = ({ storeInfo, setStoreInfo }) => {
+    const [storeInfoState, setStoreInfoState] = useState({
         storeName: '',
         address: '',
         phone: '',
@@ -15,13 +15,17 @@ const EditInformation = () => {
         storeid: '',
         storeemail: '',
     });
+    
+    
     const [file, setFile] = useState(null);
     const [message, setMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const location = useLocation();
     const { storeId, token } = location.state || {};
-    const [preview, setPreview] = useState(null); // 새로운 이미지 미리보기
+    const [preview, setPreview] = useState(null);
+
+    const [editCheck, seteditCheck] = useState(false);
 
     useEffect(() => {
         if (!storeId || !token) {
@@ -52,7 +56,7 @@ const EditInformation = () => {
         };
 
         fetchStoreDetails();
-    }, [storeId, token]);
+    }, [storeId, token, editCheck]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -92,7 +96,8 @@ const EditInformation = () => {
 
             if (response.data.status === 200) {
                 alert('가게 정보가 성공적으로 수정되었습니다.');
-                window.location.reload();
+                seteditCheck((prev) => (!prev));
+                setStoreInfo(storeInfoState);
             } else {
                 setMessage(response.data.message || '가게 정보 수정에 실패했습니다.');
             }

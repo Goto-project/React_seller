@@ -61,7 +61,7 @@ body {
 }
 
 .sidebar h2 {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     font-size: 35px;
     color: #FDF9ED;
     text-align: center;
@@ -140,7 +140,6 @@ body {
     cursor: pointer;
 }
 
-/* 모달창 배경 */
 .modal {
     position: fixed;
     top: 0;
@@ -148,14 +147,12 @@ body {
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.6);
-    /* 반투명 배경 */
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
 }
 
-/* 모달창 내용 */
 .modal-content {
     background-color: #ffffff;
     border-radius: 15px;
@@ -167,7 +164,6 @@ body {
     animation: fadeIn 0.3s ease-in-out;
 }
 
-/* 모달창 제목 */
 .modal-content h3 {
     margin-bottom: 15px;
     font-size: 20px;
@@ -175,14 +171,12 @@ body {
     color: #333333;
 }
 
-/* 모달창 설명 */
 .modal-content p {
     margin-bottom: 20px;
     font-size: 16px;
     color: #555555;
 }
 
-/* 모달창 버튼 */
 .modal-buttons {
     display: flex;
     justify-content: center;
@@ -199,7 +193,6 @@ body {
     transition: background-color 0.3s;
 }
 
-/* 확인 버튼 스타일 */
 .confirm-button {
     background-color: #6BAF92;
     color: white;
@@ -209,7 +202,6 @@ body {
     background-color: #519972;
 }
 
-/* 취소 버튼 스타일 */
 .cancel-button {
     background-color: #e0e0e0;
     color: #333333;
@@ -219,7 +211,6 @@ body {
     background-color: #d6d6d6;
 }
 
-/* 모달 애니메이션 */
 @keyframes fadeIn {
     from {
         opacity: 0;
