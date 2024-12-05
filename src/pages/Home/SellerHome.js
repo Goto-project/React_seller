@@ -7,9 +7,10 @@ import DailyMenu from './DailyMenu';
 import OrderList from './OrderList';
 import EditInformation from './EditInformation';
 import ChangePassword from './ChangePassword';
+import TodayOrder from "./TodayOrder";
 
 const SellerHome = ({ onLogout }) => {
-  const [activePage, setActivePage] = useState('MENU');
+  const [activePage, setActivePage] = useState('TODAY_ORDER');
   const [storeInfo, setStoreInfo] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -76,8 +77,8 @@ const SellerHome = ({ onLogout }) => {
   //setStoreInfo는 useState 훅을 사용하여 설정한 상태 변경 함수
   //setStoreInfo를 호출하면, storeInfo 상태를 새로운 값인 updatedInfo로 갱신
   //setStoreInfo(updatedInfo)는 storeInfo 상태를 updatedInfo로 업데이트하여, 가게 정보가 최신 상태로 반영
-  
-  const updateStoreInfo = (updatedInfo) => { 
+
+  const updateStoreInfo = (updatedInfo) => {
     setStoreInfo(updatedInfo); // EditInformation에서 수정된 정보를 갱신
   };
 
@@ -90,8 +91,10 @@ const SellerHome = ({ onLogout }) => {
 
   const renderContent = () => {
     switch (activePage) {
+      case 'TODAY_ORDER':
+        return <TodayOrder setActivePage={setActivePage}/>;
       case 'MENU':
-        return <Menu setActivePage={setActivePage} />;
+        return <Menu />;
       case 'DAILY_MENU':
         return <DailyMenu />;
       case 'ORDER_LIST':
@@ -149,6 +152,7 @@ const SellerHome = ({ onLogout }) => {
         )}
 
         <ul>
+          <li onClick={() => setActivePage('TODAY_ORDER')}>TODAY ORDER</li>
           <li onClick={() => setActivePage('MENU')}>MENU</li>
           <li onClick={() => setActivePage('DAILY_MENU')}>DAILY MENU</li>
           <li onClick={() => setActivePage('ORDER_LIST')}>ORDER LIST</li>
