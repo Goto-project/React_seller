@@ -94,7 +94,7 @@ const SellerHome = ({ onLogout }) => {
       case 'TODAY_ORDER':
         return <TodayOrder setActivePage={setActivePage}/>;
       case 'MENU':
-        return <Menu />;
+        return <Menu setActivePage={setActivePage}/>;
       case 'DAILY_MENU':
         return <DailyMenu />;
       case 'ORDER_LIST':
