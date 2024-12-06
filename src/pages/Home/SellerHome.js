@@ -182,4 +182,3 @@ const SellerHome = ({ onLogout }) => {
 };
 
 export default SellerHome;
-
