@@ -91,11 +91,6 @@ function LoginPage({ onLogin }) {
           </button>
         </form>
 
-        <div className="sns-login">
-          <button className="sns-button naver">N</button>
-          <button className="sns-button kakao">K</button>
-        </div>
-
         <div className="links">
           <Link to="/signupPage" className="link">SIGN UP</Link>
           <Link to="/ForgotPassword" className="link">FORGOT PASSWORD?</Link>
