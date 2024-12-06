@@ -258,9 +258,9 @@ function Menu({ setActivePage }) {
 
     //메뉴 삭제하기
     const handleDeleteMenu = async (menuNo) => {
-        if (window.confirm('정말 삭제하시겠습니까? 해당 메뉴는 DAILY MENU에서도 삭제됩니다.')) {
+        if (window.confirm('정말 삭제하시겠습니까?')) {
             try {
-                const response = await axios.delete(`/ROOT/api/menu/delete/${menuNo}`, {
+                const response = await axios.put(`/ROOT/api/menu/delete/${menuNo}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -277,6 +277,7 @@ function Menu({ setActivePage }) {
             }
         }
     };
+    
 
     //메뉴 페이징
     const indexOfLastItem = currentPage * itemsPerPage;
