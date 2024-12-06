@@ -106,6 +106,7 @@ function Menu({ setActivePage }) {
         });
     };
 
+    
     const handleAddToDailyMenu = async () => {
         if (selectedMenus.length === 0) {
             alert("선택된 메뉴가 없습니다.");
