@@ -277,6 +277,7 @@ function Menu({ setActivePage }) {
             }
         }
     };
+    
 
     //메뉴 페이징
     const indexOfLastItem = currentPage * itemsPerPage;
