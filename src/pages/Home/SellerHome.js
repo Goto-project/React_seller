@@ -30,7 +30,7 @@ const SellerHome = ({ onLogout }) => {
     }
 
     try {
-      const response = await axios.delete('/ROOT/api/seller/delete.do', {
+      const response = await axios.put('/ROOT/api/seller/delete.do', null, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
