@@ -34,16 +34,16 @@ function LoginPage({ onLogin }) {
         localStorage.setItem("storeId", storeId);
 
         // 로그인 상태 업데이트
-        onLogin(); 
-
-        // 로그인 데이터를 콘솔에 출력
-        console.log("로그인 성공! 로그인 데이터:", data.token);
-        console.log("아이디:", storeId);
+        onLogin();
 
         // 로그인 후 SellerHome 페이지로 이동, 로그인 데이터 전달
         navigate("/sellerhome", { state: { storeId, token: data.token } });
+      } else if (data.status === 403) {
+        // 삭제된 계정 처리
+        setErrorMessage("탈퇴한 가게입니다.");
       } else {
-        setErrorMessage("아이디 또는 비밀번호가 잘못되었습니다.");
+        // 기타 에러 처리
+        setErrorMessage(data.message || "아이디 또는 비밀번호가 잘못되었습니다.");
       }
     } catch (error) {
       console.error("로그인 중 오류:", error);
