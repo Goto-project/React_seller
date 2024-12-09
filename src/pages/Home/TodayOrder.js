@@ -16,15 +16,19 @@ const TodayOrder = () => {
                 Authorization: `Bearer ${token}`,
             },
         })
-        .then((response) => {
-            console.log(response)
-            setOrders(response.data || []);  // null 또는 undefined가 들어올 수 있기 때문에 빈 배열로 초기화
-            setLoading(false);  // 로딩 상태 업데이트
-        })
-        .catch((err) => {
-            setError('주문 데이터를 가져오는 데 실패했습니다.');
-            setLoading(false);  // 로딩 상태 업데이트
-        });
+            .then((response) => {
+                if (response.data && response.data[0] && response.data[0].status === 404) {
+                    setError(response.data[0].message);  // 주문이 없을 경우 메시지 처리
+                    setLoading(false);  // 로딩 상태 업데이트
+                } else {
+                    setOrders(response.data || []);  // 주문 데이터 처리
+                    setLoading(false);  // 로딩 상태 업데이트
+                }
+            })
+            .catch((err) => {
+                setError('주문 데이터를 가져오는 데 실패했습니다.');
+                setLoading(false);  // 로딩 상태 업데이트
+            });
     }, []);
 
     if (loading) {
