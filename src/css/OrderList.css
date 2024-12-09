@@ -1,0 +1,169 @@
+.order-list-container {
+width: 900px;
+    margin: 30px auto;
+    padding: 25px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 제목 */
+.order-list-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 매출 정보 */
+.monthly-total, .daily-total {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #4CAF50;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* 달력 컨테이너 */
+.calendar-wrapper {
+    margin: 20px 0;
+}
+
+.calendar-title {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.react-calendar {
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.react-calendar {
+    width: 100%;
+    max-width: 800px;
+    padding: 25px;
+    margin: 0 auto;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.react-calendar__tile {
+    display: flex;
+    flex-direction: column; /* 내용 수직(column) 정렬 */
+    justify-content: center; /* 세로 가운데 정렬 */
+    align-items: center; /* 가로 가운데 정렬 */
+    height: 120px; /* 타일 크기 확대 */
+    font-size: 1rem;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.react-calendar__tile:enabled:hover {
+    background-color: #f0f8ff; /* 호버 시 배경색 변경 */
+}
+
+.react-calendar__tile--active {
+    background-color: #1976D2;
+    color: #fff;
+    border-radius: 8px;
+}
+
+.react-calendar__month-view__weekdays {
+    font-size: 1.1rem;
+    text-align: center;
+    color: #555;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.react-calendar__tile--now {
+    background: #e0f7fa;
+    color: #00796b;
+}
+
+.calendar-tile-content {
+    font-size: 14px;
+    color: #1976D2;
+    margin-top: 5px;
+    text-align: center;
+}
+
+/* 칸 안 텍스트 스타일 */
+.react-calendar__month-view__days__day {
+    padding: 5px;
+}
+
+/* 날짜 표시 텍스트 크기 */
+.react-calendar__tile > abbr {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+
+/* 메시지 */
+.no-orders-message {
+    text-align: center;
+    color: #FF5722;
+    font-style: italic;
+}
+
+/* 주문 리스트 */
+.order-list {
+    list-style: none;
+    padding: 0;
+}
+
+.order-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #FAFAFA;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+}
+
+.order-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    color: #555;
+    gap: 10px;
+}
+
+.toggle-button {
+    background-color: #1976D2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-button:hover {
+    background-color: #135ba1;
+}
+
+/* 주문 상세 리스트 */
+.order-details {
+    margin-top: 10px;
+    margin-left: 20px;
+    list-style: square;
+}
+
+.order-detail-item {
+    font-size: 0.95rem;
+    color: #666;
+}

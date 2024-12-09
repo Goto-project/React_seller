@@ -64,7 +64,7 @@ const EditInformation = ({ storeInfo, setStoreInfo }) => {
             ...prevInfo,
             [name]: value,
         }));
-    };
+    };    
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
