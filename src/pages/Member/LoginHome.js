@@ -22,6 +22,15 @@ function LoginPage({ onLogin }) {
     }
   }, []);
 
+  // 로그인 여부 확인 후 리다이렉트
+  useEffect(() => {
+    const token = localStorage.getItem("token"); // 로컬 스토리지에서 토큰 가져오기
+    if (token) {
+      // 토큰이 존재하면 "/sellerhome"으로 이동
+      navigate("/sellerhome");
+    }
+  }, [navigate]);
+
   const handleLogin = async (e) => {
     e.preventDefault(); // 폼 제출 시 새로고침 방지
 
