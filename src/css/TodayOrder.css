@@ -1,54 +1,50 @@
-.orders-container {
-    width: 800px;
-    margin: 30px auto;
+/* TodayOrder.css */
+.order-container {
     padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: 'Arial', sans-serif;
-    color: #333;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.orders-container h1 {
+h1 {
     text-align: center;
-    font-size: 1.8rem;
-    color: #6BAF92;
-    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
 }
 
 .no-orders {
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 20px;
     color: #888;
-    padding: 20px;
+    margin-top: 20px;
 }
 
-.orders-list {
+.loading-message,
+.error-message {
+    text-align: center;
+    font-size: 18px;
+    color: red;
+    margin-top: 20px;
+}
+
+.order-list {
     list-style: none;
     padding: 0;
-    margin: 0;
 }
 
 .order-card {
     background-color: #fff;
+    margin: 10px 0;
+    padding: 15px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 16px;
-    padding: 16px;
-    border-left: 5px solid #6BAF92;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.order-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .order-field {
-    margin-bottom: 8px;
-    font-size: 1rem;
+    margin-bottom: 10px;
 }
 
 .order-field strong {
-    color: #555;
+    color: #007bff;
 }

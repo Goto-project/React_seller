@@ -6,9 +6,9 @@ const TodayOrder = () => {
     const [orders, setOrders] = useState([]);  // 주문 목록 상태, 빈 배열로 초기화
     const [loading, setLoading] = useState(true);  // 로딩 상태
     const [error, setError] = useState(null);  // 에러 상태
+    const [noOrdersMessage, setNoOrdersMessage] = useState("");  // 주문이 없을 경우 메시지 상태
 
     useEffect(() => {
-        // Bearer 토큰을 사용할 경우, 예시로 로컬 스토리지에서 가져올 수 있음
         const token = localStorage.getItem('token');
 
         // API 호출
@@ -18,8 +18,17 @@ const TodayOrder = () => {
             },
         })
         .then((response) => {
-            console.log(response)
-            setOrders(response.data || []);  // null 또는 undefined가 들어올 수 있기 때문에 빈 배열로 초기화
+            console.log('API 응답:', response.data); // 응답 데이터를 콘솔에 출력
+
+            if (response.data && response.data.length > 0) {
+                setOrders(response.data);
+                setNoOrdersMessage("");  // 주문이 있을 경우, 메시지 초기화
+            } else {
+                // 서버에서 "오늘의 주문 내역이 없습니다" 메시지를 받으면
+                const errorMessage = response.data.find(item => item.status === 404)?.message;
+                setNoOrdersMessage(errorMessage || "오늘의 주문 내역이 없습니다.");  // 기본 메시지 설정
+                setOrders([]);  // 주문 목록을 빈 배열로 설정
+            }
             setLoading(false);  // 로딩 상태 업데이트
         })
         .catch((err) => {
@@ -29,30 +38,44 @@ const TodayOrder = () => {
     }, []);
 
     if (loading) {
-        return <div>로딩 중...</div>;
+        return <div className="loading">로딩 중...</div>;
     }
 
     if (error) {
-        return <div>{error}</div>;
+        return <div className="error">{error}</div>;
     }
 
     return (
-        <div>
-            <h1>오늘의 주문 목록</h1>
-            {orders.length === 0 ? (
-                <div>오늘의 주문이 없습니다.</div>
+        <div className="today-order-container">
+            <h1 className="header">오늘의 주문 목록</h1>
+            {/* 주문이 없을 경우 메시지 표시 */}
+            {noOrdersMessage ? (
+                <div className="no-orders">{noOrdersMessage}</div>
             ) : (
-                <ul>
+                <ul className="order-list">
                     {orders.map((order, index) => (
-                        <li key={index}>
-                            <strong>주문 번호:</strong> {order.ordernumber}<br />
-                            <strong>주문 상태:</strong> {order.orderstatus}<br />
-                            <strong>총 금액:</strong> {order.totalprice} 원<br />
-                            <strong>주문 시간:</strong> {order.orderTime}<br />
-                            <strong>고객:</strong> {order.customeremail}<br />
-                            <strong>고객:</strong> {order.menuname}<br />
-                            <strong>픽업 상태:</strong> {order.pickupstatus}<br />
-                            {/* 필요한 필드 더 추가 */}
+                        <li key={index} className="order-item">
+                            <div className="order-detail">
+                                <strong>주문 번호:</strong> {order.ordernumber}
+                            </div>
+                            <div className="order-detail">
+                                <strong>주문 상태:</strong> {order.orderstatus}
+                            </div>
+                            <div className="order-detail">
+                                <strong>총 금액:</strong> {order.totalprice} 원
+                            </div>
+                            <div className="order-detail">
+                                <strong>주문 시간:</strong> {order.orderTime}
+                            </div>
+                            <div className="order-detail">
+                                <strong>고객:</strong> {order.customeremail}
+                            </div>
+                            <div className="order-detail">
+                                <strong>메뉴:</strong> {order.menuname}
+                            </div>
+                            <div className="order-detail">
+                                <strong>픽업 상태:</strong> {order.pickupstatus}
+                            </div>
                         </li>
                     ))}
                 </ul>
