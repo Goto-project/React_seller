@@ -17,24 +17,19 @@ const TodayOrder = () => {
                 Authorization: `Bearer ${token}`,
             },
         })
-        .then((response) => {
-            console.log('API 응답:', response.data); // 응답 데이터를 콘솔에 출력
-
-            if (response.data && response.data.length > 0) {
-                setOrders(response.data);
-                setNoOrdersMessage("");  // 주문이 있을 경우, 메시지 초기화
-            } else {
-                // 서버에서 "오늘의 주문 내역이 없습니다" 메시지를 받으면
-                const errorMessage = response.data.find(item => item.status === 404)?.message;
-                setNoOrdersMessage(errorMessage || "오늘의 주문 내역이 없습니다.");  // 기본 메시지 설정
-                setOrders([]);  // 주문 목록을 빈 배열로 설정
-            }
-            setLoading(false);  // 로딩 상태 업데이트
-        })
-        .catch((err) => {
-            setError('주문 데이터를 가져오는 데 실패했습니다.');
-            setLoading(false);  // 로딩 상태 업데이트
-        });
+            .then((response) => {
+                if (response.data && response.data[0] && response.data[0].status === 404) {
+                    setError(response.data[0].message);  // 주문이 없을 경우 메시지 처리
+                    setLoading(false);  // 로딩 상태 업데이트
+                } else {
+                    setOrders(response.data || []);  // 주문 데이터 처리
+                    setLoading(false);  // 로딩 상태 업데이트
+                }
+            })
+            .catch((err) => {
+                setError('주문 데이터를 가져오는 데 실패했습니다.');
+                setLoading(false);  // 로딩 상태 업데이트
+            });
     }, []);
 
     if (loading) {
