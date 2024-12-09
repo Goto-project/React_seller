@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import '../../css/TodayOrder.css';
 
 const TodayOrder = () => {
     const [orders, setOrders] = useState([]);  // 주문 목록 상태, 빈 배열로 초기화
