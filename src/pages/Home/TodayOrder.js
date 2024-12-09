@@ -42,40 +42,40 @@ const TodayOrder = () => {
 
     return (
         <div className="today-order-container">
-            <h1 className="header">오늘의 주문 목록</h1>
-            {/* 주문이 없을 경우 메시지 표시 */}
-            {noOrdersMessage ? (
-                <div className="no-orders">{noOrdersMessage}</div>
-            ) : (
-                <ul className="order-list">
-                    {orders.map((order, index) => (
-                        <li key={index} className="order-item">
-                            <div className="order-detail">
-                                <strong>주문 번호:</strong> {order.ordernumber}
-                            </div>
-                            <div className="order-detail">
-                                <strong>주문 상태:</strong> {order.orderstatus}
-                            </div>
-                            <div className="order-detail">
-                                <strong>총 금액:</strong> {order.totalprice} 원
-                            </div>
-                            <div className="order-detail">
-                                <strong>주문 시간:</strong> {order.orderTime}
-                            </div>
-                            <div className="order-detail">
-                                <strong>고객:</strong> {order.customeremail}
-                            </div>
-                            <div className="order-detail">
-                                <strong>메뉴:</strong> {order.menuname}
-                            </div>
-                            <div className="order-detail">
-                                <strong>픽업 상태:</strong> {order.pickupstatus}
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </div>
+    <h1 className="header">오늘의 주문 목록</h1>
+    {/* 주문이 없을 경우 메시지 표시 */}
+    {orders.length === 0 ? (
+        <div className="no-orders">오늘의 주문이 없습니다.</div>
+    ) : (
+        <ul className="order-list">
+            {orders.map((order, index) => (
+                <li key={index} className="order-item">
+                    <div className="order-detail">
+                        <strong>주문 번호:</strong> {order.ordernumber}
+                    </div>
+                    <div className="order-detail">
+                        <strong>주문 상태:</strong> {order.orderstatus}
+                    </div>
+                    <div className="order-detail">
+                        <strong>총 금액:</strong> {order.totalprice} 원
+                    </div>
+                    <div className="order-detail">
+                        <strong>주문 시간:</strong> {order.orderTime}
+                    </div>
+                    <div className="order-detail">
+                        <strong>고객:</strong> {order.customeremail}
+                    </div>
+                    <div className="order-detail">
+                        <strong>메뉴:</strong> {order.menuname}
+                    </div>
+                    <div className="order-detail">
+                        <strong>픽업 상태:</strong> {order.pickupstatus}
+                    </div>
+                </li>
+            ))}
+        </ul>
+    )}
+</div>
     );
 };
 

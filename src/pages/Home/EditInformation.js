@@ -14,6 +14,8 @@ const EditInformation = ({ storeInfo, setStoreInfo }) => {
         imageurl: '',
         storeid: '',
         storeemail: '',
+
+        
     });
     
     
