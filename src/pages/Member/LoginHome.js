@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 import '../../css/LoginHome.css';
 
 function LoginPage({ onLogin }) {
@@ -9,7 +10,26 @@ function LoginPage({ onLogin }) {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
+  const [rememberMe, setRememberMe] = useState(false); // "아이디 기억하기" 체크박스 상태
   const navigate = useNavigate(); // 페이지 이동을 위한 navigate 함수
+
+  // 페이지 로딩 시 쿠키에서 아이디 불러오기
+  useEffect(() => {
+    const savedStoreId = Cookies.get("storeId"); // 쿠키에서 아이디 가져오기
+    if (savedStoreId) {
+      setStoreId(savedStoreId); // 아이디를 input에 채워넣기
+      setRememberMe(true); // "아이디 기억하기" 체크 상태를 true로 설정
+    }
+  }, []);
+
+  // 로그인 여부 확인 후 리다이렉트
+  useEffect(() => {
+    const token = localStorage.getItem("token"); // 로컬 스토리지에서 토큰 가져오기
+    if (token) {
+      // 토큰이 존재하면 "/sellerhome"으로 이동
+      navigate("/sellerhome");
+    }
+  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault(); // 폼 제출 시 새로고침 방지
@@ -32,6 +52,13 @@ function LoginPage({ onLogin }) {
         // 로그인 성공 시 로컬 스토리지에 토큰 저장
         localStorage.setItem("token", data.token);
         localStorage.setItem("storeId", storeId);
+
+        // "아이디 기억하기"가 체크되었으면 쿠키에 아이디 저장
+        if (rememberMe) {
+          Cookies.set("storeId", storeId, { expires: 30 }); // 쿠키에 30일 동안 저장
+        } else {
+          Cookies.remove("storeId"); // 체크 안되었으면 쿠키에서 삭제
+        }
 
         // 로그인 상태 업데이트
         onLogin();
@@ -81,6 +108,17 @@ function LoginPage({ onLogin }) {
           </div>
 
           {errorMessage && <div className="error-message">{errorMessage}</div>}
+
+          <div className="remember-me">
+            <label>
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)} // 체크박스 상태 변경
+              />
+              아이디 기억하기
+            </label>
+          </div>
 
           <button
             type="submit"
