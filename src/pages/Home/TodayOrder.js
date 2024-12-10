@@ -142,100 +142,58 @@ const TodayOrder = () => {
 
     return (
         <div className="today-order-container">
-            <h1 className="header">📋 오늘의 주문 목록</h1>
+            <h1 className="header">오늘의 주문 목록</h1>
             {/* 주문이 없을 경우 메시지 표시 */}
             {orders.length === 0 ? (
                 <div className="no-orders">오늘의 진행 중인 주문이 없습니다.</div>
             ) : (
-                <>
-                    <ul className="today-order-list">
-                        {currentOrders.map((order, index) => (
-                            <li key={index} className="today-order-item">
-                                <div className="order-section">
-                                    {/* 첫 번째 칸: 주문번호, 주문시간 */}
-                                    <div className="order-detail">
-                                        <strong>주문 번호:</strong> {order.ordernumber}
-                                    </div>
-                                    <div className="order-detail">
-                                        <strong>주문 시간:</strong> {order.orderTime}
-                                    </div>
+                <ul className="order-list">
+                    {orders.map((order, index) => (
+                        <li key={index} className="order-item">
+                            <div className="order-detail">
+                                <strong>주문 번호:</strong> {order.ordernumber}
+                            </div>
+                            <div className="order-detail">
+                                <strong>주문 상태:</strong> {order.orderstatus}
+                            </div>
+                            <div className="order-detail">
+                                <strong>총 금액:</strong> {order.totalprice} 원
+                            </div>
+                            <div className="order-detail">
+                                <strong>주문 시간:</strong> {order.orderTime}
+                            </div>
+                            <div className="order-detail">
+                                <strong>고객:</strong> {order.customeremail}
+                            </div>
+                            <div className="order-detail">
+                                <strong>메뉴:</strong> {order.menuname}
+                            </div>
+                            <div className="order-detail">
+                                <strong>픽업 상태:</strong> {order.pickupstatus === 1 ? "완료" : "대기"}
+                            </div>
+                            {order.orderstatus !== '완료' && order.orderstatus !== '주문 취소' && (
+                                <div className="order-cancellation">
+                                    <button
+                                        onClick={() => handleCancelOrder(order.ordernumber)}
+                                        className="cancel-order-btn"
+                                    >
+                                        주문 취소
+                                    </button>
+                                    {order.pickupstatus !== '완료' &&
+                                        order.orderstatus !== "주문 취소" &&
+                                        order.pickupstatus !== 1 && (
+                                            <button
+                                                onClick={() => handleCompletePickup(order.ordernumber)}
+                                                className="complete-pickup-btn"
+                                            >
+                                                픽업 완료
+                                            </button>
+                                        )}
                                 </div>
-    
-                                <div className="order-section">
-                                    {/* 두 번째 칸: 메뉴, 가격 */}
-                                    <div className="order-detail">
-                                        <strong>메뉴:</strong> {order.menuname}
-                                    </div>
-                                    <div className="order-detail">
-                                        <strong>총 금액:</strong> {order.totalprice} 원
-                                    </div>
-                                </div>
-    
-                                <div className="order-section">
-                                    {/* 세 번째 칸: 고객, 주문 상태, 픽업 상태 */}
-                                    <div className="order-detail">
-                                        <strong>고객:</strong> {order.customeremail}
-                                    </div>
-                                    <div className="order-detail">
-                                        <strong>주문 상태:</strong> {order.orderstatus}
-                                    </div>
-                                    <div className="order-detail">
-                                        <strong>픽업 상태:</strong> {order.pickupstatus === 1 ? "완료" : "대기"}
-                                    </div>
-                                </div>
-    
-                                {/* 취소 및 픽업 완료 버튼 */}
-                                {order.orderstatus !== '완료' && order.orderstatus !== '주문 취소' && (
-                                    <div className="order-cancellation">
-                                        <button
-                                            onClick={() => handleCancelOrder(order.ordernumber)}
-                                            className="cancel-order-btn"
-                                        >
-                                            주문 취소
-                                        </button>
-                                        {order.pickupstatus !== '완료' &&
-                                            order.orderstatus !== "주문 취소" &&
-                                            order.pickupstatus !== 1 && (
-                                                <button
-                                                    onClick={() => handleCompletePickup(order.ordernumber)}
-                                                    className="complete-pickup-btn"
-                                                >
-                                                    픽업 완료
-                                                </button>
-                                            )}
-                                    </div>
-                                )}
-                            </li>
-                        ))}
-                    </ul>
-    
-                    {/* 페이지네이션 버튼 */}
-                    <div className="pagination">
-                        <button
-                            onClick={() => paginate(currentPage - 1)}
-                            disabled={currentPage === 1}
-                            className="pagination-btn"
-                        >
-                            이전
-                        </button>
-                        {[...Array(totalPages)].map((_, index) => (
-                            <button
-                                key={index}
-                                onClick={() => paginate(index + 1)}
-                                className={`pagination-btn ${currentPage === index + 1 ? 'active' : ''}`}
-                            >
-                                {index + 1}
-                            </button>
-                        ))}
-                        <button
-                            onClick={() => paginate(currentPage + 1)}
-                            disabled={currentPage === totalPages}
-                            className="pagination-btn"
-                        >
-                            다음
-                        </button>
-                    </div>
-                </>
+                            )}
+                        </li>
+                    ))}
+                </ul>
             )}
 
             {/* 취소된 주문 목록 */}
@@ -258,8 +216,6 @@ const TodayOrder = () => {
             )}
         </div>
     );
-    
-    
 };
 
 export default TodayOrder;

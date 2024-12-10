@@ -1,88 +1,133 @@
+/* 전체 컨테이너 스타일 */
 .today-order-container {
-    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
     padding: 20px;
-    box-sizing: border-box;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
 }
 
+/* 헤더 스타일 */
 .header {
     font-size: 24px;
+    font-weight: bold;
     text-align: center;
     margin-bottom: 20px;
+    color: #333;
 }
 
-.today-order-list {
+/* 주문이 없을 때 메시지 */
+.no-orders {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+}
+
+/* 주문 목록 스타일 */
+.order-list {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
-.today-order-item {
-    display: flex;
-    border: 1px solid #ccc;
+.order-item {
+    background-color: #fff;
+    margin-bottom: 20px;
+    padding: 15px;
     border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 15px;
-    background-color: #f9f9f9;
-    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.order-section {
-    display: flex;
-    flex-direction: column;
-    width: 33%; /* 각 칸을 3등분 */
-    padding: 0 10px;
-}
-
+/* 주문 상세 스타일 */
 .order-detail {
-    font-size: 14px;
-    margin-bottom: 8px;
+    font-size: 16px;
+    margin: 8px 0;
+    color: #555;
 }
 
 .order-detail strong {
-    font-weight: bold;
-    margin-right: 5px;
+    color: #222;
 }
 
+/* 주문 취소 및 픽업 버튼 컨테이너 */
 .order-cancellation {
     display: flex;
-    justify-content: flex-start;
-    margin-top: 10px;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
 }
 
-.cancel-order-btn, .complete-pickup-btn {
-    padding: 8px 15px;
-    margin-right: 10px;
-    cursor: pointer;
-    background-color: #f44336;
-    color: white;
+/* 버튼 스타일 */
+.cancel-order-btn,
+.complete-pickup-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #fff;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cancel-order-btn {
+    background-color: #e74c3c;
+}
+
+.cancel-order-btn:hover {
+    background-color: #c0392b;
 }
 
 .complete-pickup-btn {
-    background-color: #4caf50;
+    background-color: #2ecc71;
 }
 
-.pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
+.complete-pickup-btn:hover {
+    background-color: #27ae60;
 }
 
-.pagination-btn {
-    padding: 10px 20px;
-    margin: 0 5px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
+/* 취소된 주문 목록 스타일 */
+.cancelled-orders {
+    margin-top: 30px;
 }
 
-.pagination-btn:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+.cancelled-orders .header {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #d35400;
 }
 
-.pagination-btn.active {
-    background-color: #0056b3;
+.cancelled-orders .order-item {
+    background-color: #fef6f6;
+    border: 1px solid #e74c3c;
+}
+
+.cancelled-orders .order-detail {
+    color: #e74c3c;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .today-order-container {
+        padding: 15px;
+    }
+
+    .header {
+        font-size: 20px;
+    }
+
+    .order-detail {
+        font-size: 14px;
+    }
+
+    .cancel-order-btn,
+    .complete-pickup-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
 }
