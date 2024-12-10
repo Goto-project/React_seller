@@ -10,7 +10,7 @@ import ChangePassword from './ChangePassword';
 import TodayOrder from "./TodayOrder";
 
 const SellerHome = ({ onLogout }) => {
-  const [activePage, setActivePage] = useState('TODAY_ORDER');
+  const [activePage, setActivePage] = useState(localStorage.getItem("activePage") || "TODAY_ORDER");
   const [storeInfo, setStoreInfo] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -73,6 +73,11 @@ const SellerHome = ({ onLogout }) => {
     fetchStoreDetails();
   }, []);
 
+  // activePage 변경 시 localStorage에 저장
+  useEffect(() => {
+    localStorage.setItem("activePage", activePage);
+  }, [activePage]);
+
   //updatedInfo는 EditInformation 컴포넌트에서 수정된 새로운 가게 정보가 담긴 객체
   //setStoreInfo는 useState 훅을 사용하여 설정한 상태 변경 함수
   //setStoreInfo를 호출하면, storeInfo 상태를 새로운 값인 updatedInfo로 갱신
@@ -92,9 +97,9 @@ const SellerHome = ({ onLogout }) => {
   const renderContent = () => {
     switch (activePage) {
       case 'TODAY_ORDER':
-        return <TodayOrder setActivePage={setActivePage}/>;
+        return <TodayOrder setActivePage={setActivePage} />;
       case 'MENU':
-        return <Menu setActivePage={setActivePage}/>;
+        return <Menu setActivePage={setActivePage} />;
       case 'DAILY_MENU':
         return <DailyMenu />;
       case 'ORDER_LIST':
