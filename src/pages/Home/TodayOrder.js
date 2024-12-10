@@ -22,8 +22,9 @@ const TodayOrder = () => {
                 if (response.data && response.data[0] && response.data[0].status === 404) {
                     setError('오늘의 주문이 없습니다.');  // 주문이 없을 경우 메시지 처리
                 } else {
-                    setOrders(response.data.filter(order => order.orderstatus !== '주문 취소'));  // 취소된 주문 제외
-                    setCancelledOrders(response.data.filter(order => order.orderstatus === '주문 취소'));  // 취소된 주문만 별도로 저장
+                    const sortedOrders = response.data.sort((a, b) => new Date(b.orderTime) - new Date(a.orderTime)); // 최신순으로 정렬
+                    setOrders(sortedOrders || []);  // 주문 데이터 처리
+                    setLoading(false);  // 로딩 상태 업데이트
                 }
                 setLoading(false);  // 로딩 상태 업데이트
             })
