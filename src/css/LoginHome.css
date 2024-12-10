@@ -5,130 +5,165 @@ body {
 }
 
 .login-home {
+    height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-color: #FDF9ED;
-    overflow: auto;
+    position: relative;
 }
 
 .logo-container {
     text-align: center;
     margin-bottom: 20px;
-    margin-top: 40px;
+    margin-top: 0px;
 }
 
 .login-container {
-    width: 50%;
-    padding: 40px;
-    margin: 20px;
-    margin-bottom: 40px;
+    width: 100%;
+    max-width: 600px;
+    padding: 30px;
     background-color: white;
     border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
+    margin-left: 30px;
+    margin-right: 30px;
 }
 
-
 .logo {
-    font-size: 50px;
+    font-size: 2.5rem;
     color: #6BAF92;
     font-weight: bold;
     margin-bottom: 1rem;
 }
 
-
 .login-title {
-    font-size: 33px;
+    font-size: 1.8rem;
     color: #333;
-    margin-bottom: 25px;
-    margin-top: 25px;
+    margin-bottom: 1.5rem;
 }
 
 .login-input {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
 }
 
-.login-id {
-    width: 70%;
-    padding: 20px;
-    margin: 10px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    font-size: 18px;
-}
-
+.login-id,
 .login-pw {
-    width: 70%;
-    padding: 20px;
-    margin: 10px;
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    font-size: 18px;
+    font-size: 1rem;
+    box-sizing: border-box;
 }
 
 .login-button {
-    width: 70%;
+    width: 100%;
+    max-width: 400px;
     padding: 15px;
-    margin: 30px;
+    margin-top: 20px;
     background-color: #6BAF92;
     color: white;
     font-weight: bold;
     cursor: pointer;
     border: none;
     border-radius: 10px;
-    font-size: 20px;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
 }
 
 .login-button:hover {
     background-color: #519972;
 }
 
-.sns-login {
+.remember-me {
     display: flex;
     justify-content: center;
-    gap: 0.5rem;
-    margin: 1rem 0;
+    align-items: center;
 }
 
-.sns-button {
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 50%;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.sns-button.naver {
-    background-color: #03c75a;
-}
-
-.sns-button.kakao {
-    background-color: #fee500;
-    color: #3c1e1e;
+.id-check {
+    margin-top: 20px;
+    margin-right: 10px;
 }
 
 .links {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     margin-top: 30px;
+    gap: 0.5rem;
 }
 
 .link {
     color: #696969;
-    font-size: 20px;
+    font-size: 1rem;
     font-weight: bold;
     text-decoration: none;
-    margin-bottom: 10px;
+    transition: color 0.3s ease;
 }
 
 .link:hover {
+    color: #333;
     text-decoration: underline;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .login-container {
+        padding: 20px;
+        width: 80%;
+    }
+
+    .logo {
+        font-size: 2rem;
+    }
+
+    .login-title {
+        font-size: 1.5rem;
+    }
+
+    .login-id,
+    .login-pw,
+    .login-button {
+        font-size: 1rem;
+    }
+
+    .sns-login {
+        gap: 0.8rem;
+    }
+
+    .sns-button {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.8rem;
+    }
+
+    .login-title {
+        font-size: 1.3rem;
+    }
+
+    .login-id,
+    .login-pw,
+    .login-button {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .sns-button {
+        width: 1.8rem;
+        height: 1.8rem;
+        font-size: 0.9rem;
+    }
 }

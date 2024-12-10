@@ -85,10 +85,10 @@ function LoginPage({ onLogin }) {
       <div className="logo-container">
         <h2 className="logo">ECOEATS</h2>
       </div>
-
+  
       <div className="login-container">
         <h3 className="login-title">SELLER LOGIN</h3>
-
+  
         <form onSubmit={handleLogin}>
           <div className="login-input">
             <input
@@ -106,29 +106,30 @@ function LoginPage({ onLogin }) {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-
+  
           {errorMessage && <div className="error-message">{errorMessage}</div>}
-
+  
           <div className="remember-me">
             <label>
               <input
+                className="id-check"
                 type="checkbox"
                 checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)} // 체크박스 상태 변경
+                onChange={(e) => setRememberMe(e.target.checked)}
               />
               아이디 기억하기
             </label>
           </div>
-
+  
           <button
             type="submit"
             className="login-button"
-            disabled={isLoading || !storeId || !password} // 로딩 중이거나 입력 값이 없으면 비활성화
+            disabled={isLoading || !storeId || !password}
           >
             {isLoading ? "로그인 중..." : "LOGIN"}
           </button>
         </form>
-
+  
         <div className="links">
           <Link to="/signupPage" className="link">SIGN UP</Link>
           <Link to="/ForgotPassword" className="link">FORGOT PASSWORD?</Link>
@@ -136,6 +137,7 @@ function LoginPage({ onLogin }) {
       </div>
     </div>
   );
+  
 }
 
 export default LoginPage;

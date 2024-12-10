@@ -205,13 +205,13 @@
     justify-content: space-between;
 }
 
-input[type="checkbox"] {
-    width: 24px; /* 체크박스 너비 */
-    height: 24px; /* 체크박스 높이 */
-    accent-color: #6baf92; /* 체크박스 색상 */
+.menu-check {
+    width: 24px; 
+    height: 24px;
+    accent-color: #6baf92; 
     color: white;
-    margin-right: 15px; /* 체크박스와 이미지 간격 */
-    cursor: pointer; /* 클릭 시 커서 변경 */
+    margin-right: 15px; 
+    cursor: pointer; 
 }
 
 .menu-name {
@@ -239,14 +239,14 @@ input[type="checkbox"] {
 
 .add-to-daily-btn {
     width: 100%;
-    padding: 10px 20px; 
+    padding: 15px 20px;
     margin-top: 15px;
     background-color: #6BAF92;
-    color: #FDF9ED; 
-    border: none; 
+    color: #FDF9ED;
+    border: none;
     border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer; 
+    font-size: 18px;
+    cursor: pointer;
     box-sizing: border-box;
     transition: background-color 0.3s ease;
 }

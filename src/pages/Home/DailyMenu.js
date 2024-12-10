@@ -109,9 +109,11 @@ const DailyMenu = () => {
                         />
                         <div className="daily-menu-info">
                             <p className="menu-name">{menuItem.menuName}</p>
-                            <p>원가 : {menuItem.menuPrice} 원</p>
-                            <p>판매가 : {menuItem.menuDiscountedPrice} 원</p>
-                            <p>판매가능수량 : {menuItem.menuQty} 개</p>
+                        </div>
+                        <div className="daily-menu-info2">
+                            <p className="daily-menu-price">원가 : {menuItem.menuPrice} 원</p>
+                            <p className="menu-discounted-price">판매가 : {menuItem.menuDiscountedPrice} 원</p>
+                            <p className="menu-qty">판매가능수량 : {menuItem.menuQty} 개</p>
                         </div>
                         <div className="menu-actions">
                             <button onClick={() => openModal(menuItem)} className="edit-btn">수정</button>

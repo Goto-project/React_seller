@@ -350,6 +350,7 @@ function Menu({ setActivePage }) {
                         {currentMenuItems.map((menuItem) => (
                             <li className="menu-item" key={menuItem.menuNo}>
                                 <input
+                                    className="menu-check"
                                     type="checkbox"
                                     onChange={() => handleCheckboxChange(menuItem.menuNo)}
                                     checked={selectedMenus.includes(menuItem.menuNo)}

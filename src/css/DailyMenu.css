@@ -1,6 +1,6 @@
 .daily-menu-container {
     padding: 20px;
-    width: 900px;
+    width: 980px;
     margin: 0 auto;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .menu-image {
-    width: 150px;
+    width: 130px;
     height: 100px;
     object-fit: cover;
     border-radius: 8px;
@@ -49,6 +49,14 @@
 .daily-menu-info {
     display: flex;
     flex: 1 1;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.daily-menu-info2 {
+    display: flex;
+    flex: 4 1;
     align-items: center;
     justify-content: space-between;
     gap: 25px;

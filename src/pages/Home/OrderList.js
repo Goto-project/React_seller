@@ -12,6 +12,8 @@ const OrderList = () => {
     const [monthlyTotal, setMonthlyTotal] = useState(0);
     const [calendarData, setCalendarData] = useState({});
     const [message, setMessage] = useState('');
+    const [currentPage, setCurrentPage] = useState(1); // 페이지 상태 추가
+    const ordersPerPage = 5; // 한 페이지에 보여줄 주문 개수
 
     const formatDate = (date) => {
         setSelectedDate(date);
@@ -117,9 +119,23 @@ const OrderList = () => {
 
     const formatPrice = (price) => price.toLocaleString();
 
+    // 현재 페이지에 맞는 주문 목록을 반환
+    const indexOfLastOrder = currentPage * ordersPerPage;
+    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+    const currentOrders = groupedOrders.slice(indexOfFirstOrder, indexOfLastOrder);
+
+    // 페이지 번호 변경 함수
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    // 페이지 번호 생성 함수
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(groupedOrders.length / ordersPerPage); i++) {
+        pageNumbers.push(i);
+    }
+
     return (
         <div className="order-list-container">
-            <h1 className="order-list-title">📅 ORDER LIST</h1>
+            <h1 className="order-list-title">📋 ORDER LIST</h1>
             <h2 className="monthly-total">
                 {selectedDate.toLocaleString("default", { month: "long" })} 총 매출 : {formatPrice(monthlyTotal)}원
             </h2>
@@ -150,11 +166,11 @@ const OrderList = () => {
             <h2 className="daily-total">📌 오늘의 매출 : {formatPrice(dailyTotal)}원</h2>
             {message && <p className="no-orders-message">{message}</p>}
             <ul className="order-list">
-                {groupedOrders.map((order) => (
+                {currentOrders.map((order) => (
                     <li key={order.ordernumber} className="order-item">
                         <div className="order-header">
-                            <span>🆔 주문번호: {order.ordernumber}</span> 
-                            <span>💰 총액: {formatPrice(order.totalprice)}원</span> 
+                            <span>🆔 주문번호: {order.ordernumber}</span>
+                            <span>💰 총액: {formatPrice(order.totalprice)}원</span>
                             <span>📦 상태: {order.orderstatus}</span>
                             <button
                                 className="toggle-button"
@@ -165,16 +181,35 @@ const OrderList = () => {
                         </div>
                         {expandedOrders[order.ordernumber] && (
                             <ul className="order-details">
+                                <p style={{ fontSize: '15px', marginBottom: '10px' }}>📋 [주문내역]</p>
                                 {order.items.map((item, index) => (
                                     <li key={index} className="order-detail-item">
-                                        {item.menuname} - {item.quantity}개, {formatPrice(item.unitprice)}원
+                                        <div className="menu-quantity">
+                                            <p>{item.menuname}</p>
+                                            <span className="item-quantity">x {item.quantity}개</span>
+                                        </div>
+                                        <span className="item-price">{formatPrice(item.unitprice)}원</span>
                                     </li>
                                 ))}
                             </ul>
                         )}
+
                     </li>
                 ))}
             </ul>
+
+            {/* 페이지네이션 */}
+            <div className="pagination">
+                {pageNumbers.map((number) => (
+                    <button
+                        key={number}
+                        className={`page-button ${currentPage === number ? "active" : ""}`}
+                        onClick={() => paginate(number)}
+                    >
+                        {number}
+                    </button>
+                ))}
+            </div>
         </div>
     );
 };

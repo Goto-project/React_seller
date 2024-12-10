@@ -152,7 +152,7 @@ function SignupPage() {
                     </div>
                 </div>
 
-                <div className='option-input'>
+                <div className='sign-up-option-input'>
                     <select
                         className='select'
                         name="category"
@@ -167,7 +167,7 @@ function SignupPage() {
                     </select>
                 </div>
 
-                <div className="time-selection">
+                <div className="sign-up-time-selection">
                     <p>PICKUP TIME</p>
                         <select name="startPickup" className='startPickup' value={member.startPickup} onChange={handleChange}>
                             <option value="">Select Start Time</option>
@@ -191,11 +191,6 @@ function SignupPage() {
                     </div>
 
                 <button className='signup-button' onClick={handleJoin}>COMPLETE</button>
-
-                <div className="sns-login">
-                    <button className="sns-button naver">N</button>
-                    <button className="sns-button kakao">K</button>
-                </div>
             </div>
         </div>
     );
