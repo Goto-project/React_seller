@@ -113,20 +113,21 @@ const TodayOrder = () => {
                 );
 
                 if (response.data.status === 200) {
-                    alert(response.data.message || '픽업 완료되었습니다.');
                     // 픽업 상태 업데이트 (필요시 로컬 상태 변경)
                     setOrders((prevOrders) =>
                         prevOrders.map((order) =>
                             order.ordernumber === orderNo
-                                ? { ...order, pickupstatus: '완료' }
+                                ? { ...order, pickupstatus: 1 }
                                 : order
                         )
                     );
+                    alert(response.data.message || '픽업 성공적으로 완료되었습니다.');
                 } else {
                     alert(response.data.message || '픽업 완료 처리에 실패했습니다.');
                 }
             }
         } catch (err) {
+            console.error("픽업 완료 처리 중 오류 발생:", err);
             alert('픽업 완료 처리 중 오류가 발생했습니다.');
         }
     };
@@ -170,7 +171,7 @@ const TodayOrder = () => {
                                 <strong>메뉴:</strong> {order.menuname}
                             </div>
                             <div className="order-detail">
-                                <strong>픽업 상태:</strong> {order.pickupstatus}
+                                <strong>픽업 상태:</strong> {order.pickupstatus === 1 ? "완료" : "대기"}
                             </div>
                             {order.orderstatus !== '완료' && order.orderstatus !== '주문 취소' && (
                                 <div className="order-cancellation">
@@ -180,14 +181,16 @@ const TodayOrder = () => {
                                     >
                                         주문 취소
                                     </button>
-                                    {order.pickupstatus !== '완료' && (
-                                        <button
-                                            onClick={() => handleCompletePickup(order.ordernumber)}
-                                            className="complete-pickup-btn"
-                                        >
-                                            픽업 완료
-                                        </button>
-                                    )}
+                                    {order.pickupstatus !== '완료' &&
+                                        order.orderstatus !== "주문 취소" &&
+                                        order.pickupstatus !== 1 && (
+                                            <button
+                                                onClick={() => handleCompletePickup(order.ordernumber)}
+                                                className="complete-pickup-btn"
+                                            >
+                                                픽업 완료
+                                            </button>
+                                        )}
                                 </div>
                             )}
                         </li>
