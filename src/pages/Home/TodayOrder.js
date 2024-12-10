@@ -22,7 +22,8 @@ const TodayOrder = () => {
                     setError(response.data[0].message);  // 주문이 없을 경우 메시지 처리
                     setLoading(false);  // 로딩 상태 업데이트
                 } else {
-                    setOrders(response.data || []);  // 주문 데이터 처리
+                    const sortedOrders = response.data.sort((a, b) => new Date(b.orderTime) - new Date(a.orderTime)); // 최신순으로 정렬
+                    setOrders(sortedOrders || []);  // 주문 데이터 처리
                     setLoading(false);  // 로딩 상태 업데이트
                 }
             })
