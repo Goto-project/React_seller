@@ -6,7 +6,6 @@ const TodayOrder = () => {
     const [orders, setOrders] = useState([]);  // 주문 목록 상태, 빈 배열로 초기화
     const [loading, setLoading] = useState(true);  // 로딩 상태
     const [error, setError] = useState(null);  // 에러 상태
-    const [noOrdersMessage, setNoOrdersMessage] = useState("");  // 주문이 없을 경우 메시지 상태
 
     // 오늘의 주문 불러오기
     useEffect(() => {
@@ -96,7 +95,41 @@ const TodayOrder = () => {
     };
 
 
+    // 픽업 완료 핸들러
+    const handleCompletePickup = async (orderNo) => {
+        try {
+            const token = localStorage.getItem('token');
+            const isConfirmed = window.confirm('픽업 완료 처리하시겠습니까?');
 
+            if (isConfirmed) {
+                const response = await axios.put(
+                    `/ROOT/api/pickup/update/${orderNo}`,
+                    {},
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                if (response.data.status === 200) {
+                    alert(response.data.message || '픽업 완료되었습니다.');
+                    // 픽업 상태 업데이트 (필요시 로컬 상태 변경)
+                    setOrders((prevOrders) =>
+                        prevOrders.map((order) =>
+                            order.ordernumber === orderNo
+                                ? { ...order, pickupstatus: '완료' }
+                                : order
+                        )
+                    );
+                } else {
+                    alert(response.data.message || '픽업 완료 처리에 실패했습니다.');
+                }
+            }
+        } catch (err) {
+            alert('픽업 완료 처리 중 오류가 발생했습니다.');
+        }
+    };
 
 
 
@@ -147,6 +180,14 @@ const TodayOrder = () => {
                                     >
                                         주문 취소
                                     </button>
+                                    {order.pickupstatus !== '완료' && (
+                                        <button
+                                            onClick={() => handleCompletePickup(order.ordernumber)}
+                                            className="complete-pickup-btn"
+                                        >
+                                            픽업 완료
+                                        </button>
+                                    )}
                                 </div>
                             )}
                         </li>
