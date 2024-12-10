@@ -146,7 +146,7 @@ const TodayOrder = () => {
                                 <strong>총 금액:</strong> {order.totalprice} 원
                             </div>
                             <div className="order-detail">
-                                <strong>주문 시간:</strong> {order.orderTime}
+                                <strong>주문 시간:</strong> {new Date(order.orderTime).toLocaleString('ko-KR')}
                             </div>
                             <div className="order-detail">
                                 <strong>고객:</strong> {order.customeremail}
