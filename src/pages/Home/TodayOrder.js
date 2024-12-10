@@ -8,6 +8,7 @@ const TodayOrder = () => {
     const [error, setError] = useState(null);  // 에러 상태
     const [noOrdersMessage, setNoOrdersMessage] = useState("");  // 주문이 없을 경우 메시지 상태
 
+    // 오늘의 주문 불러오기
     useEffect(() => {
         const token = localStorage.getItem('token');
 
@@ -32,6 +33,73 @@ const TodayOrder = () => {
             });
     }, []);
 
+    // 주문 취소 핸들러
+    const handleCancelOrder = async (orderNo) => {
+        try {
+            const token = localStorage.getItem('token');
+
+            // 주문 취소 확인
+            const isConfirmed = window.confirm('정말로 이 주문을 취소하시겠습니까?');
+
+            if (isConfirmed) {
+                const response = await axios.post('/ROOT/api/order/sellercancel',
+                    { orderNo: orderNo },  // orderDTO에 해당하는 객체
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        withCredentials: true  // 크리덴셜 허용
+                    }
+                );
+
+                // 백엔드 응답 상태 코드에 따른 처리
+                if (response.data.status === 200) {
+                    // 성공적으로 취소된 경우: 로컬 상태에서 주문 제거
+                    setOrders(prevOrders =>
+                        prevOrders.filter(order => order.ordernumber !== orderNo)
+                    );
+
+                    // 성공 메시지 표시
+                    alert(response.data.message || '주문이 성공적으로 취소되었습니다.');
+                } else {
+                    // 실패한 경우: 백엔드에서 전달된 메시지 표시
+                    alert(response.data.message || '주문 취소에 실패했습니다.');
+                }
+            }
+        } catch (err) {
+            console.error('주문 취소 중 오류 발생:', err);
+            // 더 상세한 에러 핸들링
+            if (err.response) {
+                // 서버 응답이 있는 경우
+                switch (err.response.status) {
+                    case 403:
+                        alert('접근 권한이 없습니다. 다시 로그인해주세요.');
+                        break;
+                    case 404:
+                        alert('주문을 찾을 수 없습니다.');
+                        break;
+                    case 500:
+                        alert('서버 내부 오류가 발생했습니다.');
+                        break;
+                    default:
+                        alert('주문 취소 중 오류가 발생했습니다.');
+                }
+            } else if (err.request) {
+                // 요청은 보내졌으나 응답을 받지 못한 경우
+                alert('서버와 통신 중 문제가 발생했습니다.');
+            } else {
+                // 그 외 일반적인 오류
+                alert('예상치 못한 오류가 발생했습니다.');
+            }
+        }
+    };
+
+
+
+
+
+
     if (loading) {
         return <div className="loading">로딩 중...</div>;
     }
@@ -42,40 +110,50 @@ const TodayOrder = () => {
 
     return (
         <div className="today-order-container">
-    <h1 className="header">오늘의 주문 목록</h1>
-    {/* 주문이 없을 경우 메시지 표시 */}
-    {orders.length === 0 ? (
-        <div className="no-orders">오늘의 주문이 없습니다.</div>
-    ) : (
-        <ul className="order-list">
-            {orders.map((order, index) => (
-                <li key={index} className="order-item">
-                    <div className="order-detail">
-                        <strong>주문 번호:</strong> {order.ordernumber}
-                    </div>
-                    <div className="order-detail">
-                        <strong>주문 상태:</strong> {order.orderstatus}
-                    </div>
-                    <div className="order-detail">
-                        <strong>총 금액:</strong> {order.totalprice} 원
-                    </div>
-                    <div className="order-detail">
-                        <strong>주문 시간:</strong> {order.orderTime}
-                    </div>
-                    <div className="order-detail">
-                        <strong>고객:</strong> {order.customeremail}
-                    </div>
-                    <div className="order-detail">
-                        <strong>메뉴:</strong> {order.menuname}
-                    </div>
-                    <div className="order-detail">
-                        <strong>픽업 상태:</strong> {order.pickupstatus}
-                    </div>
-                </li>
-            ))}
-        </ul>
-    )}
-</div>
+            <h1 className="header">오늘의 주문 목록</h1>
+            {/* 주문이 없을 경우 메시지 표시 */}
+            {orders.length === 0 ? (
+                <div className="no-orders">오늘의 주문이 없습니다.</div>
+            ) : (
+                <ul className="order-list">
+                    {orders.map((order, index) => (
+                        <li key={index} className="order-item">
+                            <div className="order-detail">
+                                <strong>주문 번호:</strong> {order.ordernumber}
+                            </div>
+                            <div className="order-detail">
+                                <strong>주문 상태:</strong> {order.orderstatus}
+                            </div>
+                            <div className="order-detail">
+                                <strong>총 금액:</strong> {order.totalprice} 원
+                            </div>
+                            <div className="order-detail">
+                                <strong>주문 시간:</strong> {order.orderTime}
+                            </div>
+                            <div className="order-detail">
+                                <strong>고객:</strong> {order.customeremail}
+                            </div>
+                            <div className="order-detail">
+                                <strong>메뉴:</strong> {order.menuname}
+                            </div>
+                            <div className="order-detail">
+                                <strong>픽업 상태:</strong> {order.pickupstatus}
+                            </div>
+                            {order.orderstatus !== '완료' && order.orderstatus !== '주문 취소' && (
+                                <div className="order-cancellation">
+                                    <button
+                                        onClick={() => handleCancelOrder(order.ordernumber)}
+                                        className="cancel-order-btn"
+                                    >
+                                        주문 취소
+                                    </button>
+                                </div>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
     );
 };
 
