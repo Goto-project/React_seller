@@ -27,7 +27,7 @@ function LoginPage({ onLogin }) {
     const token = localStorage.getItem("token"); // 로컬 스토리지에서 토큰 가져오기
     if (token) {
       // 토큰이 존재하면 "/sellerhome"으로 이동
-      navigate("/sellerhome");
+      navigate("/");
     }
   }, [navigate]);
 
