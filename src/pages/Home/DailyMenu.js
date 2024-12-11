@@ -134,28 +134,28 @@ const DailyMenu = () => {
                         />
                         <p>메뉴 이름: {selectedMenu.menuName}</p>
                         <p>원가: {selectedMenu.menuPrice} 원</p>
-                        <label>
-                            판매가:
+                        <div className="form-group">
+                            <label className="form-label">판매가:</label>
                             <input
                                 type="number"
                                 value={newPrice}
                                 onChange={(e) => setNewPrice(e.target.value)}
                                 className="modal-input"
                             />
-                        </label>
-                        <br />
-                        <label>
-                            판매가능수량:
+                        </div>
+                        <div className="form-group">
+                            <label className="form-label">판매 가능 수량:</label>
                             <input
                                 type="number"
                                 value={newQty}
                                 onChange={(e) => setNewQty(e.target.value)}
                                 className="modal-input"
                             />
-                        </label>
-                        <br />
-                        <button onClick={updateMenu} className="modal-btn">수정 완료</button>
-                        <button onClick={() => setModalVisible(false)} className="cancel-btn">취소</button>
+                        </div>
+                        <div className="daily-button">
+                            <button onClick={updateMenu} className="modal-btn">수정 완료</button>
+                            <button onClick={() => setModalVisible(false)} className="cancel-btn">취소</button>
+                        </div>
                     </div>
                 </div>
             )}
