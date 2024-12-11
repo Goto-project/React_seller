@@ -119,7 +119,7 @@
     text-align: center;
     color: #c04b59;
     font-style: italic;
-    font-size: 0.9rem; /* 폰트 크기 축소 */
+    font-size: 15px;
 }
 
 .order-list {
